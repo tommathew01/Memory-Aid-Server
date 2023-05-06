@@ -26,9 +26,10 @@ def sq():
         output = query({
         "inputs": finalsummary,
         })
-        print(output)
-        
-        return  jsonify(output)
+        print(output[0]["summary_text"].replace(".<n>", ".\n"))
+        summary = output[0]["summary_text"].replace(".<n>", ".\n")
+        # output.replace(".<n>", ".\n")
+        return summary
 
 
 
