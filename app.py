@@ -2,13 +2,21 @@ from flask import Flask, request, jsonify
 import requests
 
 
-API_URL = "https://api-inference.huggingface.co/models/google/pegasus-cnn_dailymail"
+API_URL1 = "https://api-inference.huggingface.co/models/google/pegasus-cnn_dailymail"
 headers = {"Authorization": "Bearer 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"}
+
+API_URL2 = "https://api-inference.huggingface.co/models/atharvamundada99/bert-large-question-answering-finetuned-legal"
+headers = {"Authorization": "Bearer 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"}
+
 app = Flask(__name__)
 
 
 def query(payload):
-    response = requests.post(API_URL, headers=headers, json=payload)
+    response = requests.post(API_URL1, headers=headers, json=payload)
+    return response.json()
+
+def query(payload):
+    response = requests.post(API_URL2, headers=headers, json=payload)
     return response.json()
 
 @app.route('/')
@@ -28,6 +36,24 @@ def sq():
     output[0]["summary_text"] = summary
     finaloutput = output[0]
     return finaloutput
+
+
+@app.route('/search', methods=['POST'])
+def pq():
+    content_type = request.headers.get('Content-Type')
+    json = request.json
+    question = json["question"]
+    summary = json["summary"]   
+    finalquestion = ''.join(question)
+    finalsummary = ''.join(summary)
+    output = query({
+    "inputs": {
+        "question": finalquestion,
+        "context": finalsummary
+        },
+    })
+    print(output) 
+    return output
 
 
 
