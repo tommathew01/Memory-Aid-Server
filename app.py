@@ -19,18 +19,15 @@ def hello_world():
 @app.route('/summarize', methods=['POST'])
 def sq():
     content_type = request.headers.get('Content-Type')
-    if (content_type == 'application/json'):
-        json = request.json
-        text = json["text"]
-        finalsummary = ''.join(text)
-        output = query({
-        "inputs": finalsummary,
-        })
-        print(output[0]["summary_text"].replace(".<n>", ".\n"))
-        summary = output[0]["summary_text"].replace(".<n>", ".\n")
-        output[0]["summary_text"] = summary
-        finaloutput = output[0]
-        return finaloutput
+    json = request.json
+    text = json["text"]
+    finalsummary = ''.join(text)
+    output = query({"inputs": finalsummary,})
+    print(output[0]["summary_text"].replace(".<n>", ".\n"))
+    summary = output[0]["summary_text"].replace(".<n>", ".\n")
+    output[0]["summary_text"] = summary
+    finaloutput = output[0]
+    return finaloutput
 
 
 
