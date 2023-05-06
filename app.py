@@ -28,8 +28,9 @@ def sq():
         })
         print(output[0]["summary_text"].replace(".<n>", ".\n"))
         summary = output[0]["summary_text"].replace(".<n>", ".\n")
-        # output.replace(".<n>", ".\n")
-        return summary
+        output[0]["summary_text"] = summary
+        finaloutput = output[0]
+        return finaloutput
 
 
 
