@@ -15,8 +15,8 @@ def query1(payload):
     response = requests.post(API_URL1, headers=headers, json=payload)
     return response.json()
 
-def query2(payload):
-    response = requests.post(API_URL2, headers=headers, json=payload)
+def query2(payload1):
+    response = requests.post(API_URL2, headers=headers, json=payload1)
     return response.json()
 
 @app.route('/')
@@ -40,10 +40,10 @@ def sq():
 
 @app.route('/search', methods=['POST'])
 def pq():
-    content_type1 = request.headers.get('Content-Type')
-    json1 = request.json
-    question = json1["question"]
-    summary = json1["summary"]   
+    content_type = request.headers.get('Content-Type')
+    json = request.json
+    question = json["question"]
+    summary = json["summary"]   
     finalquestion = ''.join(question)
     finalsummary = ''.join(summary)
     output1 = query2({
