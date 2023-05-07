@@ -11,11 +11,11 @@ headers = {"Authorization": "Bearer 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"}
 app = Flask(__name__)
 
 
-def query(payload):
+def query1(payload):
     response = requests.post(API_URL1, headers=headers, json=payload)
     return response.json()
 
-def query(payload):
+def query2(payload):
     response = requests.post(API_URL2, headers=headers, json=payload)
     return response.json()
 
@@ -30,7 +30,7 @@ def sq():
     json = request.json
     text = json["text"]
     finalsummary = ''.join(text)
-    output = query({"inputs": finalsummary,})
+    output = query1({"inputs": finalsummary,})
     print(output[0]["summary_text"].replace(".<n>", ".\n"))
     summary = output[0]["summary_text"].replace(".<n>", ".\n")
     output[0]["summary_text"] = summary
@@ -40,20 +40,20 @@ def sq():
 
 @app.route('/search', methods=['POST'])
 def pq():
-    content_type = request.headers.get('Content-Type')
-    json = request.json
-    question = json["question"]
-    summary = json["summary"]   
+    content_type1 = request.headers.get('Content-Type')
+    json1 = request.json
+    question = json1["question"]
+    summary = json1["summary"]   
     finalquestion = ''.join(question)
     finalsummary = ''.join(summary)
-    output = query({
+    output1 = query2({
     "inputs": {
         "question": finalquestion,
         "context": finalsummary
         },
     })
-    print(output) 
-    return output
+    print(output1) 
+    return output1
 
 
 
